@@ -1,20 +1,23 @@
 import { Controller, Get, Post } from "@nestjs/common";
+import { PostsService } from "./posts.service";
 
 
 @Controller()
 export class PostsController {
+  constructor(private readonly postsService: PostsService) {}
+
   @Get()
   getPosts() {
-    return 'Not implemented yet';
+    return this.postsService.getPosts();
   }
 
   @Get(':ID')
   getPost() {
-    return 'Not implemented yet';
+    return this.postsService.getPost();
   }
 
   @Post()
   createPost() {
-    return 'Not implemented yet';
+    return this.postsService.createPost();
   }
 }
