@@ -23,3 +23,4 @@
 * how to attach user to request and should I?
 * auth using guard instead of middleware?
 * is it ok to use dto as interface in service (e.g. getUsers())
+* throw error instead of returning false in canActivate()
