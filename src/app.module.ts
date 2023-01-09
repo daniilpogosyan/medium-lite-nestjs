@@ -21,8 +21,8 @@ import { AccountModule } from './account/account.module';
       {
         path: 'posts',
         module: PostsModule,
-      }
-    ])
-  ]
+      },
+    ]),
+  ],
 })
 export class AppModule {}
