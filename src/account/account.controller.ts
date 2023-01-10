@@ -13,11 +13,11 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post('signup')
-  async signupUser(@Body() createUserDto: SignupUserInput) {
+  async signupUser(@Body() signupUserInput: SignupUserInput) {
     try {
       const jwt = await this.accountService.signupUser(
-        createUserDto.email,
-        createUserDto.password,
+        signupUserInput.email,
+        signupUserInput.password,
       );
       return jwt;
     } catch (err) {
@@ -28,10 +28,10 @@ export class AccountController {
   }
 
   @Post('login')
-  async loginUser(@Body() loginUserDto: LoginUserInput) {
+  async loginUser(@Body() loginUserInput: LoginUserInput) {
     return this.accountService.loginUser(
-      loginUserDto.email,
-      loginUserDto.password,
+      loginUserInput.email,
+      loginUserInput.password,
     );
   }
 }
