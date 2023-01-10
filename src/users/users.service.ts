@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { users } from '@prisma/client';
 import { AuthService } from 'src/auth/auth.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { GetUsersOptions } from './users.dto';
@@ -42,19 +43,14 @@ export class UsersService {
   }
 
   async createUser(email: string, password: string) {
-    if (await this.getUserByEmail(email)) {
-      const err = new Error('This email is in use');
-      err.name = 'EmailInUse';
-      throw err;
-    }
     const passwordHash = await this.authService.hashPassword(password);
-    const user = await this.prismaService.users.create({
+    let user: users;
+    user = await this.prismaService.users.create({
       data: {
         email,
         passwordHash,
       },
     });
-
     return user;
   }
 }
