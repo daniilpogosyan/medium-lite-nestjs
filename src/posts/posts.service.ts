@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LeanPosts } from './posts.interface';
 import { GetPostsOptions } from './posts.dto';
+import { READING_SPEED } from 'src/common/constants/posts.constants';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly prismaService: PrismaService) {}
 
   private getReadingTimeEstimate(post: { content: string }) {
-    const readingSpeed = 1000;
-    return Math.round(post.content.length / readingSpeed);
+    return Math.round(post.content.length / READING_SPEED);
   }
 
   async getPosts(options: GetPostsOptions) {

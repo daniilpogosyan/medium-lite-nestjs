@@ -1,21 +1,21 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtPayload, SignOptions, sign } from 'jsonwebtoken';
+import { JwtPayload, sign } from 'jsonwebtoken';
 import { hash, genSalt, compare } from 'bcryptjs';
+import { ConfigService } from '@nestjs/config';
+import { JWT_SIGN_OPTIONS } from '../common/constants/auth.constants';
 
 @Injectable()
 export class AuthService {
-  issueJWT(payload: JwtPayload) {
-    const options: SignOptions = {
-      expiresIn: '3d',
-      algorithm: 'HS256',
-    };
+  constructor(private configService: ConfigService) {}
 
-    if (process.env.JWT_SECRET === undefined)
+  issueJWT(payload: JwtPayload) {
+    const JWT_SECRET = this.configService.get<string>("JWT_SECRET");
+    if (JWT_SECRET === undefined)
       throw new HttpException(
         'Authentication is unavailable',
         HttpStatus.SERVICE_UNAVAILABLE,
       );
-    const token = sign(payload, process.env.JWT_SECRET, options);
+    const token = sign(payload, JWT_SECRET, JWT_SIGN_OPTIONS);
     return token;
   }
 

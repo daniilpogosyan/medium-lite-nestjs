@@ -3,15 +3,18 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
-  Inject,
   Injectable,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtPayload, verify } from 'jsonwebtoken';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private configService: ConfigService
+  ) {}
   
   async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
@@ -27,17 +30,18 @@ export class AuthGuard implements CanActivate {
     // assume that bearerToken is in the form:
     // 'Bearer {token}'
     const token = bearerToken.split(' ')[1];
-    let decoded;
 
-    if (process.env.JWT_SECRET === undefined) {
+    const JWT_SECRET = this.configService.get<string>('JWT_SECRET');
+    if (JWT_SECRET === undefined) {
       throw new HttpException(
         'Authentication is unavailable',
         HttpStatus.SERVICE_UNAVAILABLE,
-      );
-    }
-
+        );
+      }
+      
+    let decoded: JwtPayload;
     try {
-      decoded = verify(token, process.env.JWT_SECRET) as JwtPayload;
+      decoded = verify(token, JWT_SECRET) as JwtPayload;
     } catch (err) {
       throw new HttpException(
         err.message || 'JWT verification error',
