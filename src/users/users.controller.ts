@@ -8,7 +8,6 @@ export class UsersController {
 
   @Get()
   getUsers(@Query() options: GetUsersOptions) {
-    process.exit(1);
-    // return this.usersService.getUsers(options);
+    return this.usersService.getUsers(options);
   }
 }
