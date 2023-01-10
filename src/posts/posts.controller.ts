@@ -30,7 +30,10 @@ export class PostsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  createPost(@Body() createPostInput: CreatePostInput , @Request() request: any) {
+  createPost(
+    @Body() createPostInput: CreatePostInput,
+    @Request() request: any,
+  ) {
     const user = request.user as users;
     const authorID = user.ID; // hardcoded authorID since authorization is not implemented yer
     return this.postsService.createPost({ ...createPostInput, authorID });

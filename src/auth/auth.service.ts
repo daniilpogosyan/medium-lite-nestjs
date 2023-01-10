@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtPayload, SignOptions, sign } from 'jsonwebtoken';
 import { hash, genSalt, compare } from 'bcryptjs';
 
@@ -10,7 +10,11 @@ export class AuthService {
       algorithm: 'HS256',
     };
 
-    if (process.env.JWT_SECRET === undefined) return null;
+    if (process.env.JWT_SECRET === undefined)
+      throw new HttpException(
+        'Authentication is unavailable',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
     const token = sign(payload, process.env.JWT_SECRET, options);
     return token;
   }

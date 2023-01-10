@@ -1,4 +1,10 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { AccountService } from './account.service';
 import { LoginUserInput, SignupUserInput } from './account.dto';
 
@@ -13,10 +19,10 @@ export class AccountController {
         createUserDto.email,
         createUserDto.password,
       );
-      return jwt
-    } catch(err) {
+      return jwt;
+    } catch (err) {
       if (err.code === 'P2002' && err?.meta?.target.includes('email')) {
-        throw new HttpException('This email is in use', HttpStatus.BAD_REQUEST)
+        throw new HttpException('This email is in use', HttpStatus.BAD_REQUEST);
       }
     }
   }
