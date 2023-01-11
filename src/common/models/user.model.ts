@@ -1,5 +1,5 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql";
-import { PostModel } from "./post.model";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { PostModel } from './post.model';
 
 @ObjectType()
 export class UserModel {
@@ -10,5 +10,5 @@ export class UserModel {
   email: string;
 
   @Field(() => [PostModel])
-  posts: PostModel[]
+  posts: PostModel[];
 }

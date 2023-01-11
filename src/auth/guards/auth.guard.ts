@@ -14,9 +14,9 @@ import { UserService } from 'src/user/user.service';
 export class AuthGuard implements CanActivate {
   constructor(
     private userService: UserService,
-    private configService: ConfigService
+    private configService: ConfigService,
   ) {}
-  
+
   async canActivate(context: ExecutionContext) {
     const req = GqlExecutionContext.create(context).getContext().req;
     const bearerToken = req.header('authorization');
@@ -37,9 +37,9 @@ export class AuthGuard implements CanActivate {
       throw new HttpException(
         'Authentication is unavailable',
         HttpStatus.SERVICE_UNAVAILABLE,
-        );
-      }
-      
+      );
+    }
+
     let decoded: JwtPayload;
     try {
       decoded = verify(token, JWT_SECRET) as JwtPayload;

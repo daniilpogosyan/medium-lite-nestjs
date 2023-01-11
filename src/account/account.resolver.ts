@@ -1,5 +1,5 @@
-import { Args, Mutation, Resolver } from "@nestjs/graphql";
-import { AccountService } from "./account.service";
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { AccountService } from './account.service';
 
 @Resolver()
 export class AccountResolver {
@@ -8,7 +8,7 @@ export class AccountResolver {
   @Mutation(() => String)
   async signup(
     @Args('email') email: string,
-    @Args('password') password: string
+    @Args('password') password: string,
   ) {
     const jwt = await this.accountService.signupUser(email, password);
     return jwt;
@@ -17,8 +17,8 @@ export class AccountResolver {
   @Mutation(() => String)
   async login(
     @Args('email') email: string,
-    @Args('password') password: string
+    @Args('password') password: string,
   ) {
-    return this.accountService.loginUser(email,password); 
+    return this.accountService.loginUser(email, password);
   }
 }

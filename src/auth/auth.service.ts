@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private configService: ConfigService) {}
 
   issueJWT(payload: JwtPayload) {
-    const JWT_SECRET = this.configService.get<string>("JWT_SECRET");
+    const JWT_SECRET = this.configService.get<string>('JWT_SECRET');
     if (JWT_SECRET === undefined)
       throw new HttpException(
         'Authentication is unavailable',

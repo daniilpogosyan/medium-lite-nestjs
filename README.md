@@ -30,6 +30,8 @@ Answer: YES -->
 <!-- `an unknown value was passed to the validate function` when using global pipe:
 Anser: add class-validator  -->
 <!-- Should I NOT expose passwordHash in model? -->
-Use `select { content: false }` to decrease bandwidth (server <---> db)?
+<!-- Use `select { content: false }` to decrease bandwidth (server <-> db)?
+it'll make little to no difference -->
 How to use @ArgsType for pagination?
-Naming for modules: plural or singiular? post(s).service.ts
+<!-- Naming for modules: plural or singiular? post(s).service.ts
+ans: yes -->

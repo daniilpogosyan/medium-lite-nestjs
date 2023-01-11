@@ -14,7 +14,7 @@ export class AccountService {
     let user: User;
     try {
       user = await this.userService.createUser(email, password);
-    } catch(err) {
+    } catch (err) {
       if (err.code === 'P2002' && err?.meta?.target.includes('email')) {
         throw new HttpException('This email is in use', HttpStatus.BAD_REQUEST);
       }

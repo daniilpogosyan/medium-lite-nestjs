@@ -35,7 +35,7 @@ export class PostController {
     @Request() request: any,
   ) {
     const user = request.user as User;
-    const authorId = user.id; 
+    const authorId = user.id;
     return this.postService.createPost({ ...createPostInput, authorId });
   }
 }
