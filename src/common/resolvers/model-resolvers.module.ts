@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { PostsModule } from "src/posts/posts.module";
-import { UsersModule } from "src/users/users.module";
-import { PostModelResolver } from "./posts.resolver";
-import { UserModelResolver } from "./users.resolver";
+import { PostModule } from "src/post/post.module";
+import { UserModule } from "src/user/user.module";
+import { PostModelResolver } from "./post.resolver";
+import { UserModelResolver } from "./user.resolver";
 
 
 @Module({
-  imports: [UsersModule, PostsModule],
+  imports: [UserModule, PostModule],
   providers: [PostModelResolver, UserModelResolver]
 })
 export class ModelsResolversModule {}

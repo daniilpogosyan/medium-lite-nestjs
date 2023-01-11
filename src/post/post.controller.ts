@@ -11,21 +11,21 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { CreatePostInput, GetPostsOptions } from './posts.dto';
-import { PostsService } from './posts.service';
+import { CreatePostInput, GetPostsOptions } from './post.dto';
+import { PostService } from './post.service';
 
 @Controller()
-export class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+export class PostController {
+  constructor(private readonly postService: PostService) {}
 
   @Get()
   getPosts(@Query() options: GetPostsOptions) {
-    return this.postsService.getPosts(options);
+    return this.postService.getPosts(options);
   }
 
   @Get(':id')
   getPost(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.getPost(id);
+    return this.postService.getPost(id);
   }
 
   @Post()
@@ -36,6 +36,6 @@ export class PostsController {
   ) {
     const user = request.user as User;
     const authorId = user.id; 
-    return this.postsService.createPost({ ...createPostInput, authorId });
+    return this.postService.createPost({ ...createPostInput, authorId });
   }
 }

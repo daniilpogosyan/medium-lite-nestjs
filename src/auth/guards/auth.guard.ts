@@ -8,12 +8,12 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtPayload, verify } from 'jsonwebtoken';
-import { UsersService } from 'src/users/users.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private usersService: UsersService,
+    private userService: UserService,
     private configService: ConfigService
   ) {}
   
@@ -51,7 +51,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const userId: number = decoded.id;
-    const user = await this.usersService.getUser(userId);
+    const user = await this.userService.getUser(userId);
     if (user === null) {
       throw new HttpException(
         'User with this id does not exist',

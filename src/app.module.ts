@@ -3,8 +3,8 @@ import { RouterModule } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UsersModule } from './users/users.module';
-import { PostsModule } from './posts/posts.module';
+import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 import { AccountModule } from './account/account.module';
 import { ModelsResolversModule } from './common/resolvers/model-resolvers.module';
 
@@ -19,8 +19,8 @@ import { ModelsResolversModule } from './common/resolvers/model-resolvers.module
       autoSchemaFile: true,
     }),
     AccountModule,
-    UsersModule,
-    PostsModule,
+    UserModule,
+    PostModule,
     RouterModule.register([
       {
         path: 'account',
@@ -28,11 +28,11 @@ import { ModelsResolversModule } from './common/resolvers/model-resolvers.module
       },
       {
         path: 'users',
-        module: UsersModule,
+        module: UserModule,
       },
       {
         path: 'posts',
-        module: PostsModule,
+        module: PostModule,
       },
     ]),
   ],

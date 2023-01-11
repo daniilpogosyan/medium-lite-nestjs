@@ -1,14 +1,14 @@
 import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { UserModel } from '../common/models/user.model';
-import { UsersService } from "./users.service";
+import { UserService } from "./user.service";
 
 @Resolver()
-export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+export class UserResolver {
+  constructor(private readonly userService: UserService) {}
 
   @Query(() => UserModel)
   async user(@Args('id', { type: () => Int}) id: number) {
-    return this.usersService.getUser(id)
+    return this.userService.getUser(id)
   }
 
   @Query(() => [UserModel])
@@ -16,6 +16,6 @@ export class UsersResolver {
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number
   ) {
-    return this.usersService.getUsers({limit, page})
+    return this.userService.getUsers({limit, page})
   }
 }

@@ -2,17 +2,17 @@ import { UseGuards } from "@nestjs/common";
 import { Args, Context, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { User } from "@prisma/client";
 import { AuthGuard } from "src/auth/guards/auth.guard";
-import { PostsService } from "src/posts/posts.service";
+import { PostService } from "src/post/post.service";
 import { PostInput, PostModel } from "../common/models/post.model";
 
 
 @Resolver()
-export class PostsResolver {
-  constructor (private readonly postsService: PostsService) {}
+export class PostResolver {
+  constructor (private readonly postService: PostService) {}
 
   @Query(() => PostModel)
   async post(@Args('id', { type: () => Int}) id: number) {
-    return this.postsService.getPost(id)
+    return this.postService.getPost(id)
   }
 
   @Query(() => [PostModel])
@@ -20,7 +20,7 @@ export class PostsResolver {
     @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
     @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number
   ) {
-    return this.postsService.getPosts({ page, limit })
+    return this.postService.getPosts({ page, limit })
   }
 
   @Mutation(() => PostModel)
@@ -29,7 +29,7 @@ export class PostsResolver {
     @Args('postInput', { type: () => PostInput }) postInput: PostInput,
     @Context('req') req: { user: User },
   ) {
-    const newPost = await this.postsService.createPost({ ...postInput, authorId: req.user.id });
+    const newPost = await this.postService.createPost({ ...postInput, authorId: req.user.id });
     return newPost
   }
 }

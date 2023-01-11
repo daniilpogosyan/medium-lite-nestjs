@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { LeanPosts } from './posts.interface';
-import { GetPostsOptions } from './posts.dto';
-import { READING_SPEED } from 'src/common/constants/posts.constants';
+import { LeanPost } from './post.interface';
+import { GetPostsOptions } from './post.dto';
+import { READING_SPEED } from 'src/common/constants/post.constants';
 
 @Injectable()
-export class PostsService {
+export class PostService {
   constructor(private readonly prismaService: PrismaService) {}
 
   private getReadingTimeEstimate(post: { content: string }) {
@@ -42,7 +42,7 @@ export class PostsService {
     };
   }
 
-  async createPost(leanPost: LeanPosts) {
+  async createPost(leanPost: LeanPost) {
     const { title, content, authorId } = leanPost;
     const post = await this.prismaService.post.create({
       data: {
