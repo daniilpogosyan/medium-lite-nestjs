@@ -1,3 +1,3 @@
-import { posts } from '@prisma/client';
+import { Post } from '@prisma/client';
 
-export type LeanPosts = Omit<posts, 'ID'>;
+export type LeanPosts = Omit<Post, 'id'>;

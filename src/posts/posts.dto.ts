@@ -18,17 +18,17 @@ export class GetPostsOptions {
   @IsOptional()
   @IsInt()
   @IsPositive()
-  userID: number;
+  userId?: number;
 
   @IsInt()
   @IsPositive()
-  limit: number = 10;
+  limit?: number = 10;
 
   @IsInt()
   @IsPositive()
-  page: number = 1;
+  page?: number = 1;
 
   @IsOptional()
   @IsBoolean()
-  includeContent: boolean = false;
+  includeContent?: boolean = false;
 }

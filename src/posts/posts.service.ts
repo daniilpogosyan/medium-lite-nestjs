@@ -16,32 +16,20 @@ export class PostsService {
     const limit = options.limit;
     const offset = options.limit * (options.page - 1);
 
-    const posts = await this.prismaService.posts.findMany({
+    const posts = await this.prismaService.post.findMany({
       skip: offset,
       take: limit,
-      select: {
-        title: true,
-        content: options.includeContent ? true : false,
-        ID: true,
-        users: true,
-      },
       where: {
-        ...(options.userID !== undefined ? { authorID: options.userID } : {}),
+        ...(options.userId !== undefined ? { authorId: options.userId } : {}),
       },
     });
 
     return posts;
   }
 
-  async getPost(ID: number) {
-    const post = await this.prismaService.posts.findUnique({
-      select: {
-        title: true,
-        content: true,
-        ID: true,
-        users: true,
-      },
-      where: { ID },
+  async getPost(id: number) {
+    const post = await this.prismaService.post.findUnique({
+      where: { id },
     });
 
     if (post === null) {
@@ -55,12 +43,12 @@ export class PostsService {
   }
 
   async createPost(leanPost: LeanPosts) {
-    const { title, content, authorID } = leanPost;
-    const post = await this.prismaService.posts.create({
+    const { title, content, authorId } = leanPost;
+    const post = await this.prismaService.post.create({
       data: {
         title,
         content,
-        authorID,
+        authorId,
       },
     });
 

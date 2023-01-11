@@ -8,7 +8,8 @@
 <!-- * Don't check if the email is in use when creating user, use try..catch instead -->
 * rewrtie router
 * ! Fix isBoolean in *.dto.ts (include*, exclude*). Problem: include*=false is parsed as true. Possible workaround: @Transform()
-* is positive in getPost(ID)
+* is positive in getPost(id)
+* Learn shit about dataloaders
 
 # Questions:
 <!-- * Do I need to preserve migrations from older project? -->
@@ -26,3 +27,9 @@
 : YES -->
 <!-- * throw error instead of returning false in canActivate()
 Answer: YES -->
+<!-- `an unknown value was passed to the validate function` when using global pipe:
+Anser: add class-validator  -->
+<!-- Should I NOT expose passwordHash in model? -->
+Use `select { content: false }` to decrease bandwidth (server <---> db)?
+How to use @ArgsType for pagination?
+Naming for modules: plural or singiular? post(s).service.ts

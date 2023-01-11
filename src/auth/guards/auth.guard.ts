@@ -6,6 +6,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtPayload, verify } from 'jsonwebtoken';
 import { UsersService } from 'src/users/users.service';
 
@@ -17,7 +18,7 @@ export class AuthGuard implements CanActivate {
   ) {}
   
   async canActivate(context: ExecutionContext) {
-    const req = context.switchToHttp().getRequest();
+    const req = GqlExecutionContext.create(context).getContext().req;
     const bearerToken = req.header('authorization');
 
     if (bearerToken === undefined) {
@@ -49,11 +50,11 @@ export class AuthGuard implements CanActivate {
       );
     }
 
-    const userID: number = decoded.ID;
-    const user = await this.usersService.getUser(userID);
+    const userId: number = decoded.id;
+    const user = await this.usersService.getUser(userId);
     if (user === null) {
       throw new HttpException(
-        'User with this ID does not exist',
+        'User with this id does not exist',
         HttpStatus.UNAUTHORIZED,
       );
     }
