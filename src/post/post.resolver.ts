@@ -2,8 +2,10 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Context, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { OffsetPaginationInput } from 'src/common/dto/pagination-offset.input';
 import { PostService } from 'src/post/post.service';
-import { PostInput, PostModel } from '../common/models/post.model';
+import { PostModel } from '../common/models/post.model';
+import { PostInput } from './post.dto';
 
 @Resolver()
 export class PostResolver {
@@ -16,8 +18,8 @@ export class PostResolver {
 
   @Query(() => [PostModel])
   async posts(
-    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
-    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
+    @Args('pagination', { type: () => OffsetPaginationInput, nullable: true })
+    { page, limit }: OffsetPaginationInput,
   ) {
     return this.postService.getPosts({ page, limit });
   }

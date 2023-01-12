@@ -1,3 +1,4 @@
+import { Field, InputType } from '@nestjs/graphql';
 import {
   IsBoolean,
   IsInt,
@@ -31,4 +32,15 @@ export class GetPostsOptions {
   @IsOptional()
   @IsBoolean()
   includeContent?: boolean = false;
+}
+
+@InputType()
+export class PostInput {
+  @Field(() => String)
+  @Length(10, 100)
+  title: string;
+
+  @Field(() => String)
+  @Length(100, 5000)
+  content: string;
 }

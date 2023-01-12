@@ -1,5 +1,4 @@
-import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { Length } from 'class-validator';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { UserModel } from './user.model';
 
 @ObjectType()
@@ -15,15 +14,4 @@ export class PostModel {
 
   @Field(() => UserModel)
   author: UserModel;
-}
-
-@InputType()
-export class PostInput {
-  @Field(() => String)
-  @Length(10, 100)
-  title: string;
-
-  @Field(() => String)
-  @Length(100, 5000)
-  content: string;
 }

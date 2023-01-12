@@ -10,6 +10,7 @@
 * ! Fix isBoolean in *.dto.ts (include*, exclude*). Problem: include*=false is parsed as true. Possible workaround: @Transform()
 * is positive in getPost(id)
 * Learn shit about dataloaders
+* Separate graphql and rest (resolvers and cntrollers with their dto's)
 
 # Questions:
 <!-- * Do I need to preserve migrations from older project? -->
@@ -32,6 +33,8 @@ Anser: add class-validator  -->
 <!-- Should I NOT expose passwordHash in model? -->
 <!-- Use `select { content: false }` to decrease bandwidth (server <-> db)?
 it'll make little to no difference -->
-How to use @ArgsType for pagination?
+<!-- How to use @ArgsType for pagination?
+:USER DAMN InputType! It should be an object -->
 <!-- Naming for modules: plural or singiular? post(s).service.ts
 ans: yes -->
+

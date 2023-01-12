@@ -1,4 +1,5 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { OffsetPaginationInput } from 'src/common/dto/pagination-offset.input';
 import { UserModel } from '../common/models/user.model';
 import { UserService } from './user.service';
 
@@ -13,8 +14,8 @@ export class UserResolver {
 
   @Query(() => [UserModel])
   async users(
-    @Args('page', { type: () => Int, defaultValue: 1 }) page: number,
-    @Args('limit', { type: () => Int, defaultValue: 10 }) limit: number,
+    @Args('pagination', { type: () => OffsetPaginationInput, nullable: true })
+    { page, limit }: OffsetPaginationInput,
   ) {
     return this.userService.getUsers({ limit, page });
   }
