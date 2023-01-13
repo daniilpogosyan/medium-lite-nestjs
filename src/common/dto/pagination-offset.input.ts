@@ -1,13 +1,15 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsInt } from 'class-validator';
+import { IsInt, IsOptional } from 'class-validator';
 
 @InputType()
 export class OffsetPaginationInput {
-  @Field(() => Int, { defaultValue: 1 })
+  @Field(() => Int)
+  @IsOptional()
   @IsInt()
-  page: number;
+  page?: number = 1;
 
-  @Field(() => Int, { defaultValue: 10 })
+  @Field(() => Int)
+  @IsOptional()
   @IsInt()
-  limit: number;
+  limit: number = 10;
 }

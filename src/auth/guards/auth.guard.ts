@@ -8,12 +8,12 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtPayload, verify } from 'jsonwebtoken';
-import { UserService } from 'src/user/user.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    private userService: UserService,
+    private prismaService: PrismaService,
     private configService: ConfigService,
   ) {}
 
@@ -51,7 +51,9 @@ export class AuthGuard implements CanActivate {
     }
 
     const userId: number = decoded.id;
-    const user = await this.userService.getUser(userId);
+    const user = await this.prismaService.user.findUnique({
+      where: {id: userId}
+    })
     if (user === null) {
       throw new HttpException(
         'User with this id does not exist',

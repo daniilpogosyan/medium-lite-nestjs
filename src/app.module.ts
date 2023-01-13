@@ -7,9 +7,11 @@ import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { AccountModule } from './account/account.module';
 import { ModelsResolversModule } from './common/resolvers/model-resolvers.module';
+import { PrismaModule } from './prisma/prisma.modules';
 
 @Module({
   imports: [
+    PrismaModule,
     ModelsResolversModule,
     ConfigModule.forRoot({
       isGlobal: true,
