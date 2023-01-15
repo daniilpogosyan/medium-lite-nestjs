@@ -11,6 +11,7 @@
 * is positive in getPost(id)
 * Learn shit about dataloaders
 * Separate graphql and rest (resolvers and cntrollers with their dto's)
+* Remove duplication of loaders (user, post)
 
 # Questions:
 <!-- * Do I need to preserve migrations from older project? -->

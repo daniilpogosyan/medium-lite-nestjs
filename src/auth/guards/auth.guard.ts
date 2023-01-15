@@ -52,8 +52,8 @@ export class AuthGuard implements CanActivate {
 
     const userId: number = decoded.id;
     const user = await this.prismaService.user.findUnique({
-      where: {id: userId}
-    })
+      where: { id: userId },
+    });
     if (user === null) {
       throw new HttpException(
         'User with this id does not exist',

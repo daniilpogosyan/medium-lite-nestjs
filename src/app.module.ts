@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ConsoleLogger, Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -8,6 +8,8 @@ import { PostModule } from './post/post.module';
 import { AccountModule } from './account/account.module';
 import { ModelsResolversModule } from './common/resolvers/model-resolvers.module';
 import { PrismaModule } from './prisma/prisma.modules';
+import { DataLoaderModule } from './common/dataloaders/dataloader.module';
+import { DataLoaderService } from './common/dataloaders/dataloader.service';
 
 @Module({
   imports: [
@@ -16,9 +18,19 @@ import { PrismaModule } from './prisma/prisma.modules';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
+      imports: [DataLoaderModule],
       driver: ApolloDriver,
-      autoSchemaFile: true,
+      useFactory: (dataLoaderService: DataLoaderService) => ({
+        autoSchemaFile: true,
+        context: () => {
+          console.log('got loaders');
+          return {
+            dataLoaders: dataLoaderService.getLoaders(),
+          };
+        },
+      }),
+      inject: [DataLoaderService],
     }),
     AccountModule,
     UserModule,
